@@ -1,6 +1,6 @@
 {
   "name": "@jason-cli/utils",
-  "version": "1.0.4",
+  "version": "1.0.0",
   "description": "jason-cli utils",
   "author": "Jason-1994 <yange2615@gmail.com>",
   "homepage": "http://index.js",
@@ -16,5 +16,5 @@
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
-  "gitHead": "585851abd8852c7cbd367ea218862a3020fb5642"
+  "gitHead": "fd39254ea59d7603a7367705c4a278cd94bf7516"
 }
