@@ -1,6 +1,6 @@
 {
 	"name": "@jason-cli/core",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "jason-cli core",
 	"author": "Jason-1994 <yange2615@gmail.com>",
 	"homepage": "",
@@ -14,6 +14,6 @@
 		"lib"
 	],
 	"dependencies": {
-		"@jason-cli/utils": "^1.0.2"
+		"@jason-cli/utils": "^1.0.3"
 	}
 }
