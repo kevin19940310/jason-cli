@@ -1,13 +1,13 @@
 {
 	"name": "@jason-cli/core",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "jason-cli core",
 	"author": "Jason-1994 <yange2615@gmail.com>",
 	"homepage": "",
 	"license": "ISC",
 	"main": "lib/core.js",
-	"bin":{
-		"jason":"bin/index.js"
+	"bin": {
+		"jason": "bin/index.js"
 	},
 	"directories": {
 		"lib": "lib",
@@ -21,6 +21,6 @@
 	},
 	"gitHead": "fd39254ea59d7603a7367705c4a278cd94bf7516",
 	"publishConfig": {
-    "access": "public"
-  }
+		"access": "public"
+	}
 }
