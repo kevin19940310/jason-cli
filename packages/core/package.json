@@ -1,0 +1,19 @@
+{
+	"name": "@jason-cli/core",
+	"version": "1.0.0",
+	"description": "jason-cli core",
+	"author": "Jason-1994 <yange2615@gmail.com>",
+	"homepage": "",
+	"license": "ISC",
+	"main": "lib/core.js",
+	"directories": {
+		"lib": "lib",
+		"test": "__tests__"
+	},
+	"files": [
+		"lib"
+	],
+	"dependencies": {
+		"@jason-cli/utils":"^1.0.0"
+	}
+}
