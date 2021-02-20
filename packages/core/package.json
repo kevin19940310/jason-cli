@@ -19,5 +19,8 @@
 	"dependencies": {
 		"@jason-cli/utils": "^1.0.4"
 	},
-	"gitHead": "fd39254ea59d7603a7367705c4a278cd94bf7516"
+	"gitHead": "fd39254ea59d7603a7367705c4a278cd94bf7516",
+	"publishConfig": {
+    "access": "public"
+  }
 }
