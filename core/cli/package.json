@@ -1,0 +1,39 @@
+{
+	"name": "@jason-cli/core",
+	"version": "1.0.1",
+	"description": "jason-cli core",
+	"author": "Jason-1994 <yange2615@gmail.com>",
+	"homepage": "",
+	"license": "ISC",
+	"main": "lib/index.js",
+	"bin": {
+		"jason": "bin/index.js"
+	},
+	"directories": {
+		"lib": "lib",
+		"test": "__tests__"
+	},
+	"files": [
+		"lib"
+	],
+	"dependencies": {
+		"@jason-cli/get-npm-info": "file:../../utils/get-npm-info",
+		"@jason-cli/log": "file:../../utils/log",
+		"@jason-cli/utils": "file:../../utils/utils",
+		"@jason-cli/init": "file:../../commands/init",
+		"@jason-cli/exec": "file:../exec",
+		"colors": "^1.4.0",
+		"commander": "^7.1.0",
+		"dotenv": "^8.2.0",
+		"import-local": "^3.0.2",
+		"npmlog": "^4.1.2",
+		"path-exists": "^4.0.0",
+		"root-check": "^1.0.0",
+		"semver": "^7.3.4",
+		"user-home": "^2.0.0"
+	},
+	"gitHead": "fd39254ea59d7603a7367705c4a278cd94bf7516",
+	"publishConfig": {
+		"access": "public"
+	}
+}
