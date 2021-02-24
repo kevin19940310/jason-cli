@@ -1,7 +1,7 @@
 {
-  "name": "@jason-cli/package",
+  "name": "@jason-cli/format-path",
   "version": "1.0.0",
-  "description": "jason-cli npm modules",
+  "description": "jason-cli format-path",
   "author": "Jason-1994 <yange2615@gmail.com>",
   "homepage": "https://github.com/kevin19940310/jason-cli#readme",
   "license": "ISC",
@@ -25,13 +25,5 @@
   },
   "bugs": {
     "url": "https://github.com/kevin19940310/jason-cli/issues"
-  },
-  "dependencies": {
-    "@jason-cli/format-path": "file:../../utils/format-path",
-    "@jason-cli/get-npm-info": "file:../../utils/get-npm-info",
-    "@jason-cli/utils": "file:../../utils/utils",
-    "npminstall": "^4.10.0",
-    "path-exists": "^4.0.0",
-    "pkg-dir": "^5.0.0"
   }
 }
