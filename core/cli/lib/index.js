@@ -72,14 +72,12 @@ function registerCommand() {
 
     if (program.args && program.args.length < 1) {
         program.outputHelp()
-        console.log()
     }
 }
 
 // 脚手架启动前各项检查
 async function prepare() {
     checkPckVersion()  // 检查当前cli版本
-    checkNodeVersion()  // 判断node版本
     checkRoot()  //检查root账户,并降级
     checkUserHome() // 检查用户主目录
     checkEnv()  // 默认环境变量设置
@@ -130,14 +128,6 @@ function checkUserHome() {
 function checkRoot() {
     const rootCheck = require('root-check')
     rootCheck()
-}
-
-function checkNodeVersion() {
-    const currentVersion = process.version
-    const lowestVersion = config.LOWEST_NODE_VERSION
-    if (!semver.gte(currentVersion, lowestVersion)) {
-        throw new Error(colors.red(`当前node版本低于${lowestVersion},请先升级node版本!`))
-    }
 }
 
 function checkPckVersion() {

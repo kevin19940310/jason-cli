@@ -30,6 +30,7 @@
     "@jason-cli/format-path": "file:../../utils/format-path",
     "@jason-cli/get-npm-info": "file:../../utils/get-npm-info",
     "@jason-cli/utils": "file:../../utils/utils",
+    "fs-extra": "^9.1.0",
     "npminstall": "^4.10.0",
     "path-exists": "^4.0.0",
     "pkg-dir": "^5.0.0"

@@ -1,5 +1,6 @@
 'use strict';
 const path = require('path')
+const childProcess = require('child_process')
 const Package = require('@jason-cli/package')
 const log = require('@jason-cli/log')
 
@@ -32,12 +33,12 @@ async function exec() {
         })
         if (await pkg.exists()) {
             // 更新package
+            await pkg.update()
         } else {
             // 安装package
-           await pkg.install().then(res=> {},err=> {
-               console.log(err);
-            console.log(2);
-           })
+            await pkg.install().then(res => { }, err => {
+                console.log(err);
+            })
         }
     } else {
         pkg = new Package({
@@ -48,8 +49,40 @@ async function exec() {
         })
     }
     const rootFile = pkg.getRootFilePath()
-    if(rootFile) {
-        require(rootFile).apply(null, arguments);
+    log.verbose('rootFile:', rootFile)
+    if (rootFile) {
+        try {
+            // 在当前进程中调用
+            // require(rootFile).call(null, Array.from(arguments));
+            // 在node子进程中调用
+            const argv = Array.from(arguments);
+            const cmd = argv[argv.length - 1]
+            const o = Object.create(null)
+            Object.keys(cmd).forEach(key => {
+                if (cmd.hasOwnProperty(key) && !key.startsWith('_') && key !== 'parent') {
+                    // if(key ==='opts') {
+                    //     console.log(cmd.opts)
+                    // }
+                    o[key] = cmd[key]
+                }
+            })
+            argv[argv.length-1] = o
+            const code = `require('${rootFile}').call(null, ${JSON.stringify(argv)})`
+            const child = childProcess.spawn('node', ['-e', code], {
+                cwd: process.cwd(),
+                stdio: 'inherit'
+            })
+            child.on('error', (e) => {
+                log.error(e.message)
+                process.exit(1)
+            })
+            child.on('exit', (e) => {
+                log.verbose('命令执行成功:', e);
+                process.exit(e)
+            })
+        } catch (e) {
+            log.error(e.message)
+        }
     }
 }
 
