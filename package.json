@@ -11,5 +11,10 @@
   "license": "ISC",
   "devDependencies": {
     "lerna": "^3.22.1"
+  },
+  "dependencies": {
+    "fs-extra": "^9.1.0",
+    "inquirer": "^8.0.0",
+    "semver": "^7.3.4"
   }
 }
