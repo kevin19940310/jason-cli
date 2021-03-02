@@ -1,11 +1,17 @@
 'use strict';
 const fs = require('fs')
+const path = require('path')
 const inquirer = require('inquirer')
 const fsExtra = require('fs-extra')
 const semver = require('semver')
+const userHome = require('user-home')
 
 const Command = require('@jason-cli/command')
+const Package = require('@jason-cli/package')
 const log = require('@jason-cli/log')
+const { spinnerStart, sleep } = require('@jason-cli/utils')
+
+const getProjectTemplate = require('./getProjectTemplate')
 
 const TYPE_PROJECT = 'project'
 const TYPE_COMPONENT = 'component'
@@ -21,10 +27,12 @@ class InitCommand extends Command {
         try {
             // 1. 准备阶段
             const projectInfo = await this.prepare()
-            if(projectInfo) {
+            if (projectInfo) {
                 //2. 下载模版
-                log.verbose('projectInfo:',projectInfo)
-                this.downloadTemplate(projectInfo)
+
+                this.projectInfo = projectInfo
+                log.verbose('projectInfo:', projectInfo)
+                await this.downloadTemplate()
                 //3. 安装模版
             }
         } catch (error) {
@@ -33,6 +41,14 @@ class InitCommand extends Command {
     }
 
     async prepare() {
+
+        // 0. 判断项目模板是否存在
+        const template = await getProjectTemplate()
+        console.log(template);
+        if (!template || template.length <= 0) {
+            throw new Error('项目模板不存在!')
+        }
+        this.templates = template
         const localPath = process.cwd()
         //1. 判断当前目录是否为空
         if (!this.ifDirEmpty(localPath)) {
@@ -130,6 +146,12 @@ class InitCommand extends Command {
                             return v
                         }
                     }
+                },
+                {
+                    type: 'list',
+                    name: 'projectTemplate',
+                    message: '请选择项目模板',
+                    choices: this.createTemplateChoices()
                 }
             ])
             // console.log(answer);
@@ -143,8 +165,45 @@ class InitCommand extends Command {
         return projectInfo
     }
 
-    downloadTemplate(projectInfo) {
+    async downloadTemplate() {
+        const { projectTemplate } = this.projectInfo
+        const templateInfo = this.templates.find(item => item.npmName === projectTemplate)
+        const targetPath = path.resolve(userHome, '.jason-cli', 'template')
+        const storeDir = path.resolve(targetPath, 'node_modules')
+        const { npmName, version } = templateInfo
+        const templateNpm = new Package({
+            targetPath,
+            storeDir,
+            packageName: npmName,
+            packageVersion: version
+        })
+        if (!await templateNpm.exists()) {
 
+            // 安装模板
+            const spinner = spinnerStart('正在下载模板')
+            await sleep(1000)
+            try {
+                await templateNpm.install()
+            } catch (error) {
+
+            } finally {
+
+                spinner.stop(true)
+            }
+        } else {
+
+            // 更新模板
+            const spinner = spinnerStart('正在更新模板')
+            await sleep(1000)
+            try {
+                await templateNpm.update()
+            } catch (error) {
+
+            } finally {
+
+                spinner.stop(true)
+            }
+        }
     }
 
     ifDirEmpty(localPath) {
@@ -153,6 +212,15 @@ class InitCommand extends Command {
             !file.startsWith('.') && ['node_modules'].indexOf(file) < 0
         ))
         return !fileList || fileList.length <= 0
+    }
+
+    createTemplateChoices() {
+        return this.templates.map(item => {
+            return {
+                name: item.name,
+                value: item.npmName
+            }
+        })
     }
 }
 
